@@ -24,3 +24,6 @@ def multiply(c: int, d: int):
 async def square(a: int):
     return {"square": a * a}
 
+@app.get("/name")
+def name():
+    return {"Your Name"}
