@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-from fastapi import FastAPI
+from fastapi import Request, FastAPI
 from typing import Optional
 from pydantic import BaseModel
+import pandas as pd 
 import json
 import os
 
@@ -10,7 +11,7 @@ app = FastAPI()
 
 @app.get("/")  # zone apex
 def zone_apex():
-    return {"Good Day": "Sunshine!"}
+    return {"Hi": "TD!"}
 
 @app.get("/sum/{a}/{b}")
 def add(a: int, b: int):
@@ -27,3 +28,11 @@ async def square(a: int):
 @app.get("/name")
 def name():
     return {"Your Name"}
+
+@api.get("/customer/{idx}")
+def customer(idx: int):
+    # read the data into a df
+    df = pd.read_csv("../customers.csv")
+    # filter the data based on the index
+    customer =  df.iloc[idx]
+    return customer.to_dict()
